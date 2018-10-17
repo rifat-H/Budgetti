@@ -1,0 +1,3 @@
+# budgetti
+
+manage money.. easily
