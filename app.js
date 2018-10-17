@@ -1,10 +1,9 @@
 // budget controller
 var budgetConroller = (function () {
 
-    // some code
+    
 
 })();
-
 
 
 // ui controller
@@ -15,18 +14,18 @@ var uiController = (function () {
         inputDesc: '.add__description',
         inputValue: '.add__value',
         inputBtn: '.add__btn',
-    }    
+    }
 
     return {
-        getinput: function(){
+        getinput: function () {
             return {
-                 type : document.querySelector(domStrings.inputType).value,
-                 description : document.querySelector(domStrings.inputDesc).value,
-                 value : document.querySelector(domStrings.inputValue).value
+                type: document.querySelector(domStrings.inputType).value,
+                description: document.querySelector(domStrings.inputDesc).value,
+                value: document.querySelector(domStrings.inputValue).value
             };
         },
 
-        getDOMstrings: function(){
+        getDOMstrings: function () {
             return domStrings;
         }
     }
@@ -37,23 +36,35 @@ var uiController = (function () {
 // global controller
 var controller = (function (budgetCtrl, uiCtrl) {
 
-    var DOM = uiController.getDOMstrings
+    var setupEventListners = function () {
 
-    var ctrlAddItem = function () {
-        
-        var input = uiController.getinput();
-        console.log(input);
-        
+        var DOM = uiController.getDOMstrings();
+
+        document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+        document.addEventListener('keypress', function (event) {
+            if (event.keyCode === 13 || event.which === 13) {
+                ctrlAddItem();
+            }
+        });
     }
 
-    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
-    document.addEventListener('keypress', function (event) {
-        if (event.keyCode === 13 || event.which === 13) {
 
-            ctrlAddItem();
+    var ctrlAddItem = function () {
 
+        var input = uiController.getinput();
+        console.log(input);
+
+    }
+
+    return {
+        init: function () {
+            console.log('Application has started..');
+            setupEventListners();
         }
-    });
+    }
 
 })(budgetConroller, uiController);
+
+controller.init();
