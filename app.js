@@ -13,7 +13,8 @@ var uiController = (function () {
     var domStrings = {
         inputType: '.add__type',
         inputDesc: '.add__description',
-        inputValue: '.add__value'
+        inputValue: '.add__value',
+        inputBtn: '.add__btn',
     }    
 
     return {
@@ -22,7 +23,11 @@ var uiController = (function () {
                  type : document.querySelector(domStrings.inputType).value,
                  description : document.querySelector(domStrings.inputDesc).value,
                  value : document.querySelector(domStrings.inputValue).value
-            }
+            };
+        },
+
+        getDOMstrings: function(){
+            return domStrings;
         }
     }
 
@@ -32,6 +37,8 @@ var uiController = (function () {
 // global controller
 var controller = (function (budgetCtrl, uiCtrl) {
 
+    var DOM = uiController.getDOMstrings
+
     var ctrlAddItem = function () {
         
         var input = uiController.getinput();
@@ -39,7 +46,7 @@ var controller = (function (budgetCtrl, uiCtrl) {
         
     }
 
-    document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
     document.addEventListener('keypress', function (event) {
         if (event.keyCode === 13 || event.which === 13) {
