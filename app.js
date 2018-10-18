@@ -74,10 +74,10 @@ var uiController = (function () {
             var html, newHtml, element;
             // Create HTML String with placeholder text
 
-            if(type === 'inc'){
+            if (type === 'inc') {
                 element = domStrings.incomeContainer;
                 html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn">X<i class="ion-ios-close-outline"></i></button></div></div></div>';
-            }else if(type === 'exp'){
+            } else if (type === 'exp') {
                 element = domStrings.expensesContainer;
                 html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn">X<i class="ion-ios-close-outline"></i></button></div></div></div>';
             }
@@ -91,7 +91,19 @@ var uiController = (function () {
             // Insert The html into the dom
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        },
 
+        clearFields: function () {
+            var fields, fieldsArr;
+
+            fields = document.querySelectorAll(domStrings.inputDesc + ', ' + domStrings.inputValue);
+
+            fieldsArr = Array.prototype.slice.call(fields);
+
+            fieldsArr.forEach(function (current, index, array) {
+                current.value = "";
+            });
+            fieldsArr[0].focus();
         },
 
         getDOMstrings: function () {
@@ -131,6 +143,10 @@ var controller = (function (budgetCtrl, uiCtrl) {
 
         // add item to ui
         uiCtrl.addListItem(newItem, input.type);
+
+        // clear fields 
+
+        uiCtrl.clearFields();
 
         // calculate the budget
 
