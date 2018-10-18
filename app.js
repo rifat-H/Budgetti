@@ -67,10 +67,16 @@ var budgetConroller = (function () {
             data.budget = data.totals.inc - data.totals.exp;
 
             // calculate percentage of income that we spent
-            data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+            if (data.totals.inc > 0) {
+                data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+            } else {
+                data.percentage = -1;
+            }
+
         },
+
         getBudget: function () {
-            return{
+            return {
                 budget: data.budget,
                 totalInc: data.totals.inc,
                 totalexp: data.totals.exp,
@@ -93,6 +99,10 @@ var uiController = (function () {
         inputBtn: '.add__btn',
         incomeContainer: '.income__list',
         expensesContainer: '.expenses__list',
+        budgetLabel: 'budget__value',
+        incomeLabel: 'budget__income--value',
+        expenseLabel: 'budget__expenses--value',
+        parcentageLabel: 'budget__expenses--percentage',
     }
 
     return {
@@ -140,6 +150,13 @@ var uiController = (function () {
             fieldsArr[0].focus();
         },
 
+        displayBudget: function(obj){
+            document.querySelector(domStrings.budgetLabel).textContent = obj.budget;
+            document.querySelector(domStrings.incomeLabel).textContent = obj.totalInc;
+            document.querySelector(domStrings.expenseLabel).textContent = obj.totalexp;
+            document.querySelector(domStrings.parcentageLabel).textContent = obj.percentage;
+        },
+
         getDOMstrings: function () {
             return domStrings;
         }
@@ -174,7 +191,7 @@ var controller = (function (budgetCtrl, uiCtrl) {
         var budget = budgetConroller.getBudget();
 
         // display the budget on ui
-        
+        uiController.displayBudget(budget);
 
     }
 
