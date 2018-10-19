@@ -76,12 +76,14 @@ var budgetConroller = (function () {
         },
 
         getBudget: function () {
+
             return {
                 budget: data.budget,
                 totalInc: data.totals.inc,
                 totalexp: data.totals.exp,
                 percentage: data.percentage,
             }
+
         },
 
     }
@@ -116,15 +118,16 @@ var uiController = (function () {
         },
 
         addListItem: function (obj, type) {
+
             var html, newHtml, element;
             // Create HTML String with placeholder text
 
             if (type === 'inc') {
                 element = domStrings.incomeContainer;
-                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn">X<i class="ion-ios-close-outline"></i></button></div></div></div>';
+                html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn">X<i class="ion-ios-close-outline"></i></button></div></div></div>';
             } else if (type === 'exp') {
                 element = domStrings.expensesContainer;
-                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn">X<i class="ion-ios-close-outline"></i></button></div></div></div>';
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn">X<i class="ion-ios-close-outline"></i></button></div></div></div>';
             }
 
             // replace the placeholder text with some actual data
@@ -136,9 +139,11 @@ var uiController = (function () {
             // Insert The html into the dom
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        
         },
 
         clearFields: function () {
+
             var fields, fieldsArr;
 
             fields = document.querySelectorAll(domStrings.inputDesc + ', ' + domStrings.inputValue);
@@ -149,16 +154,17 @@ var uiController = (function () {
                 current.value = "";
             });
             fieldsArr[0].focus();
+
         },
 
-        displayBudget: function(obj){
+        displayBudget: function (obj) {
             document.querySelector(domStrings.budgetLabel).textContent = obj.budget;
             document.querySelector(domStrings.incomeLabel).textContent = obj.totalInc;
             document.querySelector(domStrings.expenseLabel).textContent = obj.totalexp;
 
-            if(obj.percentage > 0){
+            if (obj.percentage > 0) {
                 document.querySelector(domStrings.parcentageLabel).textContent = obj.percentage + '%';
-            }else{
+            } else {
                 document.querySelector(domStrings.parcentageLabel).textContent = '---';
             }
         },
@@ -228,14 +234,23 @@ var controller = (function (budgetCtrl, uiCtrl) {
         }
     }
 
-    var ctrlDelItem = function(event){
+    var ctrlDelItem = function (event) {
 
-        console.log(event.target);
-        
+        var itemID, splitID, type, ID;
+
+        itemID = event.target.parentNode.parentNode.parentNode.id;
+
+        if (itemID) {
+            splitID = itemID.split('-');
+            type = splitID[0];
+            ID = splitID[1];
+        }
+
     };
 
     return {
         init: function () {
+
             console.log('Application has started...');
             uiController.displayBudget({
                 budget: 0,
@@ -243,7 +258,9 @@ var controller = (function (budgetCtrl, uiCtrl) {
                 totalexp: 0,
                 percentage: -1,
             });
+
             setupEventListners();
+
         }
     }
 
