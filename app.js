@@ -103,6 +103,7 @@ var uiController = (function () {
         incomeLabel: '.budget__income--value',
         expenseLabel: '.budget__expenses--value',
         parcentageLabel: '.budget__expenses--percentage',
+        container: '.container',
     }
 
     return {
@@ -184,6 +185,9 @@ var controller = (function (budgetCtrl, uiCtrl) {
                 ctrlAddItem();
             }
         });
+
+        document.querySelector(DOM.container).addEventListener('click', ctrlDelItem);
+
     }
 
 
@@ -223,6 +227,12 @@ var controller = (function (budgetCtrl, uiCtrl) {
 
         }
     }
+
+    var ctrlDelItem = function(event){
+
+        console.log(event.target);
+        
+    };
 
     return {
         init: function () {
