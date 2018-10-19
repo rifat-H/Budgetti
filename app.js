@@ -99,10 +99,10 @@ var uiController = (function () {
         inputBtn: '.add__btn',
         incomeContainer: '.income__list',
         expensesContainer: '.expenses__list',
-        budgetLabel: 'budget__value',
-        incomeLabel: 'budget__income--value',
-        expenseLabel: 'budget__expenses--value',
-        parcentageLabel: 'budget__expenses--percentage',
+        budgetLabel: '.budget__value',
+        incomeLabel: '.budget__income--value',
+        expenseLabel: '.budget__expenses--value',
+        parcentageLabel: '.budget__expenses--percentage',
     }
 
     return {
@@ -154,7 +154,7 @@ var uiController = (function () {
             document.querySelector(domStrings.budgetLabel).textContent = obj.budget;
             document.querySelector(domStrings.incomeLabel).textContent = obj.totalInc;
             document.querySelector(domStrings.expenseLabel).textContent = obj.totalexp;
-            document.querySelector(domStrings.parcentageLabel).textContent = obj.percentage;
+            document.querySelector(domStrings.parcentageLabel).textContent = obj.percentage + '%';
         },
 
         getDOMstrings: function () {
