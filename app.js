@@ -116,7 +116,7 @@ var budgetConroller = (function () {
                 return cur.getPercentage();
             });
             console.log(allPerc);
-            
+
             return allPerc;
         },
 
@@ -224,25 +224,45 @@ var uiController = (function () {
             }
         },
 
-        displayPercentages: function(percentages){
+        displayPercentages: function (percentages) {
 
             var fields = document.querySelectorAll(domStrings.expensesPercLabel);
 
-            var nodeListForEach = function(list, callback){
-                for(var i=0; i< list.length; i++){
+            var nodeListForEach = function (list, callback) {
+                for (var i = 0; i < list.length; i++) {
                     callback(list[i], i);
                 }
             };
 
-            nodeListForEach(fields, function(current, index){
+            nodeListForEach(fields, function (current, index) {
 
-                if(percentages[index] > 0){
+                if (percentages[index] > 0) {
                     current.textContent = percentages[index] + '%';
-                }else{
+                } else {
                     current.textContent = '---';
                 }
 
             });
+        },
+
+        formatNumber: function (num, type) {
+            var numSplit, int, dec;
+            // + or minus before the number 
+            // 2 decimal points
+            //comma separationg thousands
+
+            num = math.abs(num);
+            num = num.toFixed(2);
+
+            numSplit = num.split('.');
+
+            int = numSplit[0];
+
+            if (int.length > 3) {
+                int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, int.length);
+            }
+
+            dec = numSplit[1];
         },
 
         getDOMstrings: function () {
