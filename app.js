@@ -8,7 +8,7 @@ var budgetConroller = (function () {
         this.percentage = -1;
     };
 
-    Expense.prototype.calccPercentages = function (totalIncome) {
+    Expense.prototype.calcPercentages = function (totalIncome) {
         if (totalIncome > 0) {
             this.percentage = Math.round((this.value / totalIncome) * 100);
         } else {
@@ -16,7 +16,7 @@ var budgetConroller = (function () {
         }
     }
 
-    Expense.prototype.getPercentages = function(){
+    Expense.prototype.getPercentages = function () {
         return this.percentage;
     }
 
@@ -106,10 +106,17 @@ var budgetConroller = (function () {
 
         calculatePercentages: function () {
 
-            data.allItems.exp.forEach(function(cur){
-                current.calccPercentages();
+            data.allItems.exp.forEach(function (cur) {
+                cur.calcPercentages(data.totals.inc);
             });
 
+        },
+
+        getPercentages: function () {
+            var allPerc = data.allItems.exp.map(function () {
+                return cur.getBudget();
+            });
+            return allPerc;
         },
 
         getBudget: function () {
@@ -259,11 +266,13 @@ var controller = (function (budgetCtrl, uiCtrl) {
     var updatePercentages = function () {
 
         //calculate percentages
+        budgetConroller.calculatePercentages();
 
         //read them from budget controller
+        var percentages = budgetConroller.getBudget();
 
         // update user interface with new percentages
-
+        console.log(percentages);
     };
 
 
