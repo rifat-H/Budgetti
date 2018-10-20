@@ -5,7 +5,20 @@ var budgetConroller = (function () {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1;
     };
+
+    Expense.prototype.calccPercentages = function (totalIncome) {
+        if (totalIncome > 0) {
+            this.percentage = Math.round((this.value / totalIncome) * 100);
+        } else {
+            this.percentage = -1;
+        }
+    }
+
+    Expense.prototype.getPercentages = function(){
+        return this.percentage;
+    }
 
     var Income = function (id, description, value) {
         this.id = id;
@@ -56,18 +69,18 @@ var budgetConroller = (function () {
             data.allItems[type].push(newItem);
             return newItem;
         },
-        
-        deleteItem: function(type, id){
-            
+
+        deleteItem: function (type, id) {
+
             var ids, index;
 
-            ids = data.allItems[type].map(function(current){
+            ids = data.allItems[type].map(function (current) {
                 return current.id;
             });
 
             index = ids.indexOf(id);
 
-            if(index !== -1){
+            if (index !== -1) {
                 data.allItems[type].splice(index, 1);
             }
 
@@ -88,6 +101,14 @@ var budgetConroller = (function () {
             } else {
                 data.percentage = -1;
             }
+
+        },
+
+        calculatePercentages: function () {
+
+            data.allItems.exp.forEach(function(cur){
+                current.calccPercentages();
+            });
 
         },
 
@@ -155,17 +176,17 @@ var uiController = (function () {
             // Insert The html into the dom
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
-        
+
         },
 
-        deleteListItem: function(selectorID){
+        deleteListItem: function (selectorID) {
 
             var el = document.getElementById(selectorID);
             el.parentNode.removeChild(el);
 
         },
 
-        
+
 
         clearFields: function () {
 
@@ -235,7 +256,7 @@ var controller = (function (budgetCtrl, uiCtrl) {
 
     };
 
-    var updatePercentages = function(){
+    var updatePercentages = function () {
 
         //calculate percentages
 
