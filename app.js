@@ -151,7 +151,7 @@ var uiController = (function () {
         expenseLabel: '.budget__expenses--value',
         parcentageLabel: '.budget__expenses--percentage',
         container: '.container',
-        expensesPercLabel: 'item__percentage',
+        expensesPercLabel: '.item__percentage',
     }
 
     return {
