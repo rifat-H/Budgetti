@@ -56,6 +56,22 @@ var budgetConroller = (function () {
             data.allItems[type].push(newItem);
             return newItem;
         },
+        
+        deleteItem: function(type, id){
+            
+            var ids, index;
+
+            ids = data.allItems[type].map(function(current){
+                return current.id;
+            });
+
+            index = ids.indexOf(id);
+
+            if(index !== -1){
+                data.allItems[type].splice(index, 1);
+            }
+
+        },
 
         calculateBudget: function () {
 
@@ -141,6 +157,15 @@ var uiController = (function () {
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
         
         },
+
+        deleteListItem: function(selectorID){
+
+            var el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el);
+
+        },
+
+        
 
         clearFields: function () {
 
@@ -243,8 +268,17 @@ var controller = (function (budgetCtrl, uiCtrl) {
         if (itemID) {
             splitID = itemID.split('-');
             type = splitID[0];
-            ID = splitID[1];
+            ID = parseInt(splitID[1]);
         }
+
+        // delete item from data structure
+        budgetConroller.deleteItem(type, ID);
+
+        // delete the irem from the ui
+        uiController.deleteListItem(itemID);
+
+        // update and show the new budget
+        updateBudget();
 
     };
 
