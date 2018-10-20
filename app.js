@@ -112,10 +112,10 @@ var budgetConroller = (function () {
         },
 
         getPercentages: function () {
+            
             var allPerc = data.allItems.exp.map(function (cur) {
                 return cur.getPercentage();
             });
-            console.log(allPerc);
 
             return allPerc;
         },
@@ -152,6 +152,27 @@ var uiController = (function () {
         parcentageLabel: '.budget__expenses--percentage',
         container: '.container',
         expensesPercLabel: '.item__percentage',
+    };
+
+    var formatNumber = function (num, type) {
+        var numSplit, int, dec, sign;
+
+        num = Math.abs(num);
+        num = num.toFixed(2);
+
+        numSplit = num.split('.');
+
+        int = numSplit[0];
+        if (int.length > 3) {
+            int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, int.length);
+        }
+
+        dec = numSplit[1];
+
+        // type === 'exp' ? sign = '-' : sign = '+';
+
+        return (type === 'exp' ? sign = '-' : sign = '+') + ' ' + int + '.' + dec;
+
     }
 
     return {
@@ -180,7 +201,7 @@ var uiController = (function () {
 
             newHtml = html.replace('%id%', obj.id);
             newHtml = newHtml.replace('%description%', obj.description);
-            newHtml = newHtml.replace('%value%', obj.value);
+            newHtml = newHtml.replace('%value%', formatNumber(obj.value));
 
             // Insert The html into the dom
 
@@ -245,25 +266,6 @@ var uiController = (function () {
             });
         },
 
-        formatNumber: function (num, type) {
-            var numSplit, int, dec;
-            // + or minus before the number 
-            // 2 decimal points
-            //comma separationg thousands
-
-            num = math.abs(num);
-            num = num.toFixed(2);
-
-            numSplit = num.split('.');
-
-            int = numSplit[0];
-
-            if (int.length > 3) {
-                int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, int.length);
-            }
-
-            dec = numSplit[1];
-        },
 
         getDOMstrings: function () {
             return domStrings;
