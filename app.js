@@ -16,7 +16,7 @@ var budgetConroller = (function () {
         }
     }
 
-    Expense.prototype.getPercentages = function () {
+    Expense.prototype.getPercentage = function () {
         return this.percentage;
     }
 
@@ -112,8 +112,8 @@ var budgetConroller = (function () {
         },
 
         getPercentages: function () {
-            var allPerc = data.allItems.exp.map(function () {
-                return cur.getPercentages();
+            var allPerc = data.allItems.exp.map(function (cur) {
+                return cur.getPercentage();
             });
             return allPerc;
         },
